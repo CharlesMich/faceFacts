@@ -18,6 +18,9 @@ struct EditPersonView: View {
                     .textContentType(.emailAddress)
                     .textInputAutocapitalization(.never)
             }
+            Section("Notes"){
+                TextField("Details about this person", text: $person.details, axis: .vertical)
+            }
         }
         .navigationTitle("Edit Person")
             .navigationBarTitleDisplayMode(.inline)
