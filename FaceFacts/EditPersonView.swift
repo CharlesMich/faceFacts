@@ -42,13 +42,16 @@ struct EditPersonView: View {
             }
         }
         .navigationTitle("Edit Person")
-            .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(for: Event.self){
+                EditEventView(event: event)
+            }
     }
     
     func addEvent(){
         let event = Event(name: "", location: "")
         modelContext.insert(event)
-        pa
+        navigationPath.append(event)
     }
 }
 

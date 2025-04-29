@@ -21,7 +21,7 @@ struct ContentView: View {
             .navigationTitle("FaceFacts")
             .navigationDestination(for: Person.self){
                 person in
-                EditPersonView(person: person)
+                EditPersonView(navigationPath: $path, person: person)
             }
             .toolbar {
                 Menu("Sort", systemImage: "arrow.up.arrow.down"){
