@@ -23,6 +23,13 @@ struct EditEventView: View {
     }
 }
 
-//#Preview {
-//    EditEventView()
-//}
+#Preview {
+    do {
+        let previewer = try Previewer()
+        
+        return EditEventView(event: previewer.event)
+            .modelContainer(previewer.container)
+    } catch {
+        return Text("sdfsjdhf \(error.localizedDescription)")
+    }
+}

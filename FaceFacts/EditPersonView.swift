@@ -26,12 +26,14 @@ struct EditPersonView: View {
             Section("Where did you meet them"){
                 Picker("Met at", selection: $person.metAt){
                     Text("Unknown event")
+                        .tag(Optional<Event>.none)
                     
                     if events.isEmpty == false {
                         Divider()
                         
                         ForEach(events) { event in
                             Text(event.name)
+                                .tag(Optional(event))
                         }
                     }
                 }
@@ -43,9 +45,9 @@ struct EditPersonView: View {
         }
         .navigationTitle("Edit Person")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationDestination(for: Event.self){
-                EditEventView(event: event)
-            }
+        .navigationDestination(for: Event.self){ event in
+            EditEventView(event: event)
+        }
     }
     
     func addEvent(){
@@ -55,6 +57,12 @@ struct EditPersonView: View {
     }
 }
 
-//#Preview {
-//    EditPersonView()
-//}
+#Preview {
+    do {
+        let previewer = try Previewer()
+        return EditPersonView(person: previewer.person, navigationPath: .constant(NavigationPath()))
+            .modelContainer(previewer.container)
+    } catch {
+       return  Text("sdfsjdhf \(error.localizedDescription)")
+    }
+}
