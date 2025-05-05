@@ -6,16 +6,24 @@
 //
 import SwiftData
 import SwiftUI
+import PhotosUI
 
 struct EditPersonView: View {
     @Environment(\.modelContext) var modelContext
     @Binding var navigationPath: NavigationPath
     @Bindable var person: Person
+    @State private var selectedItem: PhotosPickerItem?
+    
     @Query(sort: [SortDescriptor(\Event.name),
                   SortDescriptor(\Event.location)
                  ]) var events: [Event]
     var body: some View {
         Form {
+            Section {
+                PhotosPicker(selection: $selectedItem, matching: .images) {
+                    Label("select a photo", systemImage: "Person")
+                }
+            }
             Section {
                 TextField("name", text: $person.name)
                     .textContentType(.name)
@@ -57,12 +65,12 @@ struct EditPersonView: View {
     }
 }
 
-#Preview {
-    do {
-        let previewer = try Previewer()
-        return EditPersonView(person: previewer.person, navigationPath: .constant(NavigationPath()))
-            .modelContainer(previewer.container)
-    } catch {
-       return  Text("sdfsjdhf \(error.localizedDescription)")
-    }
-}
+//#Preview {
+//    do {
+//        let previewer = try Previewer()
+//        return EditPersonView(person: previewer.person, navigationPath: .constant(NavigationPath()))
+//            .modelContainer(previewer.container)
+//    } catch {
+//       return  Text("sdfsjdhf: \(error.localizedDescription)")
+//    }
+//}
